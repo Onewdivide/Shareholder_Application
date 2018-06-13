@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="topbar_background">@android:color/holo_blue_light</color>
+    <color name="default_background">#81eeff</color>
+    <color name="bottombar_background">#006a8e</color>
 </resources>
