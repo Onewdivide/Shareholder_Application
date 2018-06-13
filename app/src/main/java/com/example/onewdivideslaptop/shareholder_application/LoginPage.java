@@ -1,5 +1,6 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +18,8 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Start <QR camera> activity
+                Intent intent = new Intent(LoginPage.this,QR_Camera_Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -24,6 +27,8 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Start <QR camera> activity
+                Intent intent = new Intent(LoginPage.this,QR_Camera_Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -31,6 +36,8 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Start <Username log-in> activity
+                Intent intent = new Intent(LoginPage.this,UsernameLogin.class);
+                startActivity(intent);
             }
         });
 
@@ -38,6 +45,8 @@ public class LoginPage extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Start <Username log-in> activity
+                Intent intent = new Intent(LoginPage.this,UsernameLogin.class);
+                startActivity(intent);
             }
         });
     }
