@@ -17,6 +17,9 @@
         </activity>
         <activity android:name=".UsernameLogin" />
         <activity android:name=".QR_Camera_Activity" />
+        <activity android:name=".MainPage" />
+        <activity android:name=".ViewAll" />
+        <activity android:name=".ViewAgendaItem" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -31,6 +34,7 @@
             </intent-filter>
 
         </activity>
+
     </application>
 
 </manifest>

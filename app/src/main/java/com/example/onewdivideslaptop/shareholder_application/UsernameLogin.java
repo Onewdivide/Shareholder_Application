@@ -22,6 +22,7 @@ public class UsernameLogin extends AppCompatActivity {
     Dialog dialog;
     EditText usernameInput;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +53,13 @@ public class UsernameLogin extends AppCompatActivity {
             TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
             Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
 
-//            yesBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Intent intent = new Intent(UsernameLogin.this,LoginPage.class);
-//                    startActivity(intent);
-//                }
-//            });
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(UsernameLogin.this,MainPage.class);
+                    startActivity(intent);
+                }
+            });
 
             Log.e("popUp","Show");
             txtClose.setOnClickListener(new View.OnClickListener() {
@@ -74,3 +75,5 @@ public class UsernameLogin extends AppCompatActivity {
         }
 
 }
+
+
