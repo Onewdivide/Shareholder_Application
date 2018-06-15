@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/default_background"
+    android:background="@color/primaryDark"
     tools:context=".UsernameLogin">
 
     <View
@@ -43,6 +43,7 @@
 
     <Button
         android:id="@+id/login_button"
+        android:onClick="showConfirmPopup"
         android:layout_width="220dp"
         android:layout_height="60dp"
         android:background="@drawable/button_background"

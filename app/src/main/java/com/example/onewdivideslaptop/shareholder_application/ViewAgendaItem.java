@@ -14,5 +14,6 @@ public class ViewAgendaItem extends AppCompatActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
         String description = intent.getStringExtra("description");
+
     }
 }
