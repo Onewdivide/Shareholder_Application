@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 public class UsernameLogin extends AppCompatActivity {
 
     ImageButton backBtn;
+    Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +22,15 @@ public class UsernameLogin extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UsernameLogin.this,LoginPage.class);
+                startActivity(intent);
+            }
+        });
+
+        loginBtn = (Button) findViewById(R.id.login_button);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UsernameLogin.this,MainPage.class);
                 startActivity(intent);
             }
         });
