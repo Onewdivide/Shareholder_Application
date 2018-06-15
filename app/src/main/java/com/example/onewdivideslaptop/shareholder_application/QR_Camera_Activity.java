@@ -17,6 +17,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -119,14 +120,17 @@ public class QR_Camera_Activity extends AppCompatActivity {
                 if(qrcodes.size() != 0)
                 {
                     txtResult.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            //Create vibrate
-                            Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-                            vibrator.vibrate(1000);
-                            txtResult.setText(qrcodes.valueAt(0).displayValue);
-                        }
-                    });
+                    @Override
+                    public void run() {
+                        //Create vibrate
+                        Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                        vibrator.vibrate(1000);
+                        txtResult.setText(qrcodes.valueAt(0).displayValue);
+                    }
+                });
+                    Toast.makeText(getApplicationContext(),qrcodes.valueAt(0).displayValue,Toast.LENGTH_LONG).show();
+                    Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(1000);
                 }else{
                     Log.e("QR code : ","Cant catch QR code");
                 }
