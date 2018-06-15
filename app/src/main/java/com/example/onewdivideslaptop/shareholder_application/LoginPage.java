@@ -1,12 +1,16 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -81,15 +85,21 @@ public class LoginPage extends AppCompatActivity {
                 Log.e("Scan*******", "Cancelled scan");
 
             } else {
-                Log.e("Scan", "Scanned");
+                Log.e("Scan", result.getContents());
 
 //                tv_qr_readTxt.setText(result.getContents());
                 Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginPage.this,UsernameLogin.class);
+                intent.putExtra("Username",result.getContents());
+                startActivity(intent);
+
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+
 
 }
