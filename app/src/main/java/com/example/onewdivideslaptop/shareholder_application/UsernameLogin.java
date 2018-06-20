@@ -1,22 +1,26 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class UsernameLogin extends AppCompatActivity {
 
     ImageButton backBtn;
     Button loginBtn;
-<<<<<<< HEAD
-=======
+
     Dialog dialog;
     EditText usernameInput;
 
->>>>>>> d0a988a45a80544038c38d40370c170ca581998e
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,17 +36,7 @@ public class UsernameLogin extends AppCompatActivity {
             }
         });
 
-<<<<<<< HEAD
-        loginBtn = (Button) findViewById(R.id.login_button);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UsernameLogin.this,MainPage.class);
-                startActivity(intent);
-            }
-        });
-    }
-=======
+
         }
 
         public void showConfirmPopup(View v){
@@ -71,7 +65,6 @@ public class UsernameLogin extends AppCompatActivity {
             dialog.show();
         }
 
->>>>>>> d0a988a45a80544038c38d40370c170ca581998e
 }
 
 

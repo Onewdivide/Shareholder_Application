@@ -14,8 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginPage">
-<<<<<<< HEAD
-=======
+
         </activity>
         <activity android:name=".UsernameLogin" />
         <activity android:name=".QR_Camera_Activity" />
@@ -29,27 +28,13 @@
 
         <activity android:name=".splashActivity">
 
->>>>>>> d0a988a45a80544038c38d40370c170ca581998e
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".UsernameLogin" />
-        <activity android:name=".QR_Camera_Activity" />
 
-        <meta-data
-            android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="barcode" />
-
-        <activity android:name=".MainPage" />
-        <activity android:name=".ViewAll" />
-        <activity android:name=".ViewAgendaItem"></activity>
-=======
-
->>>>>>> d0a988a45a80544038c38d40370c170ca581998e
     </application>
 
 </manifest>

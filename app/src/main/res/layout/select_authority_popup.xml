@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:text="Error"
-            android:textColor="@color/white"
+            android:textColor="@color/white_bg"
             android:textSize="18dp" />
 
         <android.support.v7.widget.RecyclerView
