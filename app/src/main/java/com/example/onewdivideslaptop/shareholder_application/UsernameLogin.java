@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.regex.Pattern;
 
 public class UsernameLogin extends AppCompatActivity {
 
@@ -21,6 +21,7 @@ public class UsernameLogin extends AppCompatActivity {
     Button loginBtn;
     Dialog dialog;
     EditText usernameInput;
+    Pattern delegateId_pattern = Pattern.compile("[0-9]+");
 
 
     @Override
@@ -48,10 +49,21 @@ public class UsernameLogin extends AppCompatActivity {
 
         }
 
+        private boolean isValidId(String delegateId){
+            return delegateId_pattern.matcher(delegateId).matches();
+        }
+
         public void showConfirmPopup(View v){
+            String delegateId = usernameInput.getText().toString();
+            if(!isValidId(delegateId)) return;
+
             dialog.setContentView(R.layout.login_popup);
             TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
             Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+
+            TextView usernameTextView = dialog.findViewById(R.id.Username);
+            String username = "xxxx xxxxx";
+            usernameTextView.setText(username);
 
             yesBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

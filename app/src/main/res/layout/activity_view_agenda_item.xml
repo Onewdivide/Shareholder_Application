@@ -4,6 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewAgendaItem">
+    tools:context=".ViewAgendaItem"
+    android:background="@color/default_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:padding="8dp"
+            android:background="@color/topbar_background">
+
+            <ImageButton
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@color/topbar_background"
+                app:srcCompat="@drawable/back_button_background" />
+
+            <TextView
+                android:id="@+id/agenda_item_title"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:layout_weight="1"
+                android:text="AgendaName"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+
+            <ImageButton
+                android:id="@+id/duumy_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:background="@color/topbar_background"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/back_button_background"
+                android:clickable="false" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp"
+            >
+
+            <TextView
+                android:id="@+id/agenda_item_description"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_weight="1"
+                android:layout_gravity="top"
+                android:background="@drawable/button_unfocused"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:text="AgendaItemDescription"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+
+            <Button
+                android:id="@+id/vote_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="25dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/button_background"
+                android:text="ออกความเห็น"
+                android:textSize="18dp"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
