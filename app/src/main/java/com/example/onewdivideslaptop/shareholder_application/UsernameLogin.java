@@ -60,6 +60,7 @@ public class UsernameLogin extends AppCompatActivity {
             dialog.setContentView(R.layout.login_popup);
             TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
             Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+            Button noBtn = (Button) dialog.findViewById(R.id.noBtn);
 
             TextView usernameTextView = dialog.findViewById(R.id.Username);
             String username = "xxxx xxxxx";
@@ -70,6 +71,13 @@ public class UsernameLogin extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(UsernameLogin.this,MainPage.class);
                     startActivity(intent);
+                }
+            });
+
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
                 }
             });
 
