@@ -21,6 +21,7 @@ public class ViewAll extends AppCompatActivity {
         ((ImageButton) findViewById(R.id.back_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AppUtility.focus(AppUtility.mainPage);
                 finish();
             }
         });

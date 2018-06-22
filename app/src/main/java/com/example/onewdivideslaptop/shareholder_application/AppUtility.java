@@ -18,6 +18,7 @@ public class AppUtility {
     public static shareHolderClient client;
 
     private static Context context;
+    public static Context mainPage;
     private static int delegate_id;
     private static String th_name, en_name;
     public static int active_agenda;

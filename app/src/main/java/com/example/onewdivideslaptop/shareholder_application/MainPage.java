@@ -27,6 +27,7 @@ public class MainPage extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main_page);
 
+        AppUtility.mainPage = this;
         AppUtility.focus(this);
 
         viewAllBtn = (Button) findViewById(R.id.view_all_button);
