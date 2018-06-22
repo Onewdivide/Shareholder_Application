@@ -10,30 +10,25 @@ import android.widget.TextView;
 
 public class Authority {
 
-    public static final String ALL_AGENDA = "ALL";
-    public static final String VOTE_AGREE = "Agree";
-    public static final String VOTE_DISAGREE = "Disgree";
-    public static final String VOTE_NOCOMMENT = "NoComment";
-
     private static String[] authorities = {"Mr.Antimage", "Mr.Bunny", "Mr.Chicken", "Mr.D Luffy"};
 
     private static String selectMessage(String voteType){
-        return "Please confirm voting " + voteType + " for this agenda item.\nYou're using the authority of:";
+        return "Please confirm voting " + voteType.toUpperCase() + " for this agenda item.\nYou're using the authority of:";
     }
 
     private static String[] getAuthorities(int delegateId){
         return authorities;
     }
 
-    public static void selectAuthority(Context context, Dialog dialog, String agendaId, String voteType) {
+    public static void selectAuthority(Dialog dialog) {
         String[] authorities = getAuthorities(AppUtility.getDelegateId());
         dialog.setContentView(R.layout.select_authority_popup);
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
-        dialogMessage.setText(selectMessage(voteType));
+        dialogMessage.setText(selectMessage(AppUtility.active_vote_type));
         RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new AuthorityListAdapter(context,authorities,voteType,agendaId));
+        recyclerView.setLayoutManager(new LinearLayoutManager(AppUtility.getCurrentContext()));
+        recyclerView.setAdapter(new AuthorityListAdapter(AppUtility.getCurrentContext(),authorities,AppUtility.active_vote_type,AppUtility.active_agenda));
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
     }

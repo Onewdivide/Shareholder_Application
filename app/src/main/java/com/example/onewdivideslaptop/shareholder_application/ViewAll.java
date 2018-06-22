@@ -16,6 +16,8 @@ public class ViewAll extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all);
 
+        AppUtility.focus(this);
+
         ((ImageButton) findViewById(R.id.back_button)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,15 +28,12 @@ public class ViewAll extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        String[] titles = {"An agenda item","An agenda item","An agenda item","An agenda item","An agenda item","An agenda item"};
-        String[] descriptions = {
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-                "Description for an agenda item. We drift through the heaven hatenai omoi Filled with the love from up above...",
-        };
-        recyclerView.setAdapter(new AgendaItemListAdapter(ViewAll.this,titles,descriptions));
+
+        int[] agenda_ids = AppUtility.agenda_ids;
+        String[] agenda_titles = AppUtility.agenda_titles;
+        String[] agenda_full_titles = AppUtility.agenda_full_titles;
+        String[] agenda_descriptions = AppUtility.agenda_descriptions;
+        recyclerView.setAdapter(new AgendaItemListAdapter(agenda_ids,agenda_titles,agenda_full_titles,agenda_descriptions));
     }
+
 }

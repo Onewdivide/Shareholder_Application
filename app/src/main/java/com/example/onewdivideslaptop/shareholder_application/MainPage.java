@@ -3,23 +3,16 @@ package com.example.onewdivideslaptop.shareholder_application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import static com.example.onewdivideslaptop.shareholder_application.Authority.ALL_AGENDA;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_AGREE;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_DISAGREE;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_NOCOMMENT;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.selectAuthority;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.AGENDA_ALL;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_AGREE;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_DISAGREE;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_NOCOMMENT;
 
 public class MainPage extends AppCompatActivity {
 
@@ -34,11 +27,18 @@ public class MainPage extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main_page);
 
+        AppUtility.focus(this);
+
         viewAllBtn = (Button) findViewById(R.id.view_all_button);
         viewAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainPage.this.startActivity(new Intent(MainPage.this,ViewAll.class));
+                AppUtility.fetchAgenda(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainPage.this.startActivity(new Intent(MainPage.this,ViewAll.class));
+                    }
+                });
             }
         });
 
@@ -48,7 +48,9 @@ public class MainPage extends AppCompatActivity {
         voteAgreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,ALL_AGENDA,VOTE_AGREE);
+                AppUtility.active_vote_type = AppUtility.VOTE_AGREE;
+                AppUtility.active_agenda = AGENDA_ALL;
+                Authority.selectAuthority(dialog);
             }
         });
 
@@ -56,7 +58,9 @@ public class MainPage extends AppCompatActivity {
         voteDisagreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,ALL_AGENDA,VOTE_DISAGREE);
+                AppUtility.active_vote_type = AppUtility.VOTE_DISAGREE;
+                AppUtility.active_agenda = AGENDA_ALL;
+                Authority.selectAuthority(dialog);
             }
         });
 
@@ -64,7 +68,9 @@ public class MainPage extends AppCompatActivity {
         voteNoCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,ALL_AGENDA,VOTE_NOCOMMENT);
+                AppUtility.active_vote_type = AppUtility.VOTE_NOCOMMENT;
+                AppUtility.active_agenda = AGENDA_ALL;
+                Authority.selectAuthority(dialog);
             }
         });
 

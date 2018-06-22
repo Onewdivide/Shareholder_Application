@@ -26,8 +26,8 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
         }
     }
 
-    public AgendaItemListAdapter(Context context,String[] titles,String[] descriptions){
-        this.context = context;
+    public AgendaItemListAdapter(int[] ids,String[] titles,String[] full_titles,String[] descriptions){
+        this.context = AppUtility.getCurrentContext();
         this.mAgendaTitle = titles;
         this.mAgendaDescription = descriptions;
     }
@@ -39,7 +39,7 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
     }
 
     public void onBindViewHolder(ViewHolder holder, final int position){
-        holder.title.setText(mAgendaTitle[position]+" :"+position);
+        holder.title.setText(mAgendaTitle[position]);
         holder.description.setText(mAgendaDescription[position]);
         if(position%2==0){
             holder.view.setBackgroundColor(Color.parseColor("#2468AC"));

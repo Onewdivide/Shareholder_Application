@@ -14,17 +14,15 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_AGREE;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_DISAGREE;
-import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_NOCOMMENT;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_AGREE;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_DISAGREE;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_NOCOMMENT;
 import static com.example.onewdivideslaptop.shareholder_application.Authority.selectAuthority;
 
 public class ViewAgendaItem extends AppCompatActivity {
 
     TextView agenda_item_title;
     TextView agenda_item_description;
-    String agendaId = "DummyId";
-    String delegateId = "DummyId";
     ImageButton backButton;
     Button vote_bottom;
     Dialog vote_dialog,auth_dialog;
@@ -35,6 +33,8 @@ public class ViewAgendaItem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.activity_view_agenda_item);
+
+        AppUtility.focus(this);
 
         Intent intent = getIntent();
         String title = intent.getStringExtra("title");
@@ -73,7 +73,8 @@ public class ViewAgendaItem extends AppCompatActivity {
         agreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,agendaId,VOTE_AGREE);
+                AppUtility.active_vote_type = VOTE_AGREE;
+                selectAuthority(auth_dialog);
             }
         });
 
@@ -81,7 +82,8 @@ public class ViewAgendaItem extends AppCompatActivity {
         disagreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,agendaId,VOTE_DISAGREE);
+                AppUtility.active_vote_type = VOTE_DISAGREE;
+                selectAuthority(auth_dialog);
             }
         });
 
@@ -89,7 +91,8 @@ public class ViewAgendaItem extends AppCompatActivity {
         noCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,agendaId,VOTE_NOCOMMENT);
+                AppUtility.active_vote_type = VOTE_NOCOMMENT;
+                selectAuthority(auth_dialog);
             }
         });
 

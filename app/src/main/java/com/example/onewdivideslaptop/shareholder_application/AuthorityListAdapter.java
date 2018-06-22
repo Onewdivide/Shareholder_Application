@@ -19,7 +19,7 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
     private String[] authorities; // to be reconstructed to (title+names(th,eng) and id) >> the commented line below
     //private String[] shareHolderIds,shareHolderThaiNames,shareHolderEngNames;
     private String voteType;
-    private String agendaId;
+    private int agendaId;
     private Dialog dialog;
     private Context context;
 
@@ -31,7 +31,7 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
         }
     }
 
-    public AuthorityListAdapter(Context context, String[] authorities,String voteType,String agendaId){
+    public AuthorityListAdapter(Context context, String[] authorities,String voteType,int agendaId){
         this.authorities = authorities;
         this.voteType = voteType;
         this.agendaId = agendaId;
