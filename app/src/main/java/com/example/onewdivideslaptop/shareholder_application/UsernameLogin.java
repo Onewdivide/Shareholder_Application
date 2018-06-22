@@ -28,6 +28,9 @@ public class UsernameLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username_login);
+
+        AppUtility.focus(this);
+
         dialog = new Dialog(this);
 
         usernameInput = (EditText) findViewById(R.id.serial_num_field);
@@ -57,41 +60,46 @@ public class UsernameLogin extends AppCompatActivity {
             String delegateId = usernameInput.getText().toString();
             if(!isValidId(delegateId)) return;
 
-            dialog.setContentView(R.layout.login_popup);
-            TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
-            Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
-            Button noBtn = (Button) dialog.findViewById(R.id.noBtn);
-
-            TextView usernameTextView = dialog.findViewById(R.id.Username);
-            String username = "xxxx xxxxx";
-            usernameTextView.setText(username);
-
-            yesBtn.setOnClickListener(new View.OnClickListener() {
+            AppUtility.login(delegateId, new Runnable() {
                 @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(UsernameLogin.this,MainPage.class);
-                    startActivity(intent);
+                public void run() {
+                    dialog.setContentView(R.layout.login_popup);
+                    TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
+                    Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+                    Button noBtn = (Button) dialog.findViewById(R.id.noBtn);
+
+                    TextView usernameTextView = dialog.findViewById(R.id.Username);
+                    usernameTextView.setText(AppUtility.getDelegateThaiName()+"\n"+AppUtility.getDelegateEngName());
+
+                    yesBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(UsernameLogin.this, MainPage.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    noBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    Log.e("popUp", "Show");
+                    txtClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.e("popUp", "Close");
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
                 }
             });
 
-            noBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-
-            Log.e("popUp","Show");
-            txtClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("popUp","Close");
-                    dialog.dismiss();
-                }
-            });
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
         }
 
 }

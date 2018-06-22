@@ -21,12 +21,12 @@ public class Authority {
         return "Please confirm voting " + voteType + " for this agenda item.\nYou're using the authority of:";
     }
 
-    private static String[] getAuthorities(String delegateId){
+    private static String[] getAuthorities(int delegateId){
         return authorities;
     }
 
-    public static void selectAuthority(Context context, Dialog dialog, String delegateId, String agendaId, String voteType) {
-        String[] authorities = getAuthorities(delegateId);
+    public static void selectAuthority(Context context, Dialog dialog, String agendaId, String voteType) {
+        String[] authorities = getAuthorities(AppUtility.getDelegateId());
         dialog.setContentView(R.layout.select_authority_popup);
         TextView dialogMessage = dialog.findViewById(R.id.dialog_message);
         dialogMessage.setText(selectMessage(voteType));

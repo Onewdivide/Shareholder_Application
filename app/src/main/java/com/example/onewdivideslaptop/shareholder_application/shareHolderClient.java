@@ -1,11 +1,6 @@
-package com.example.onewdivideslaptop.retrofittest;
+package com.example.onewdivideslaptop.shareholder_application;
 
-import com.example.onewdivideslaptop.retrofittest.responseModel.agendaForClientResponse;
-import com.example.onewdivideslaptop.retrofittest.responseModel.checkAuthorityForVoteAgendaResponse;
-import com.example.onewdivideslaptop.retrofittest.responseModel.checkAuthorityForVoteAllResponse;
-import com.example.onewdivideslaptop.retrofittest.responseModel.getNameResponse;
-import com.example.onewdivideslaptop.retrofittest.responseModel.voteAllResponse;
-import com.example.onewdivideslaptop.retrofittest.responseModel.voteResponse;
+import com.example.onewdivideslaptop.shareholder_application.responseModel.*;
 
 import java.util.List;
 

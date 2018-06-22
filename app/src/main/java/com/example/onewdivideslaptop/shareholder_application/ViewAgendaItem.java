@@ -73,7 +73,7 @@ public class ViewAgendaItem extends AppCompatActivity {
         agreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,delegateId,agendaId,VOTE_AGREE);
+                selectAuthority(context,auth_dialog,agendaId,VOTE_AGREE);
             }
         });
 
@@ -81,7 +81,7 @@ public class ViewAgendaItem extends AppCompatActivity {
         disagreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,delegateId,agendaId,VOTE_DISAGREE);
+                selectAuthority(context,auth_dialog,agendaId,VOTE_DISAGREE);
             }
         });
 
@@ -89,7 +89,7 @@ public class ViewAgendaItem extends AppCompatActivity {
         noCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,auth_dialog,delegateId,agendaId,VOTE_NOCOMMENT);
+                selectAuthority(context,auth_dialog,agendaId,VOTE_NOCOMMENT);
             }
         });
 

@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import static com.example.onewdivideslaptop.shareholder_application.Authority.ALL_AGENDA;
 import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_AGREE;
 import static com.example.onewdivideslaptop.shareholder_application.Authority.VOTE_DISAGREE;
@@ -22,8 +24,8 @@ import static com.example.onewdivideslaptop.shareholder_application.Authority.se
 public class MainPage extends AppCompatActivity {
 
     Button viewAllBtn,voteAgreeButton,voteDisagreeButton,voteNoCommentButton;
+    TextView welcomeMessage;
     Dialog dialog;
-    String delegateId = "DummyID";
     Context context;
 
     @Override
@@ -46,7 +48,7 @@ public class MainPage extends AppCompatActivity {
         voteAgreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,delegateId,ALL_AGENDA,VOTE_AGREE);
+                selectAuthority(context,dialog,ALL_AGENDA,VOTE_AGREE);
             }
         });
 
@@ -54,7 +56,7 @@ public class MainPage extends AppCompatActivity {
         voteDisagreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,delegateId,ALL_AGENDA,VOTE_DISAGREE);
+                selectAuthority(context,dialog,ALL_AGENDA,VOTE_DISAGREE);
             }
         });
 
@@ -62,9 +64,14 @@ public class MainPage extends AppCompatActivity {
         voteNoCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                selectAuthority(context,dialog,delegateId,ALL_AGENDA,VOTE_NOCOMMENT);
+                selectAuthority(context,dialog,ALL_AGENDA,VOTE_NOCOMMENT);
             }
         });
+
+        welcomeMessage = (TextView) findViewById(R.id.welcome_msg);
+        welcomeMessage.setText("ยินดีต้อนรับ คุณ"
+                + AppUtility.getDelegateThaiName()
+                + "\nสู่การประชุมลงมติวาระ ครั้งที่ 1\nประจำวันที่ 22 มิถุนายน 2561");
 
     }
 

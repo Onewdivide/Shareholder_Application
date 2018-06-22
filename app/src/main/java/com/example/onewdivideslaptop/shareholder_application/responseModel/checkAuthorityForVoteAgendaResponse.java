@@ -1,4 +1,4 @@
-package com.example.onewdivideslaptop.retrofittest.responseModel;
+package com.example.onewdivideslaptop.shareholder_application.responseModel;
 
 public class checkAuthorityForVoteAgendaResponse {
     String id
