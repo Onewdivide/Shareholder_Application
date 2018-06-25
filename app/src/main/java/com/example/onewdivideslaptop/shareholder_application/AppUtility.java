@@ -62,7 +62,7 @@ public class AppUtility {
 
             @Override
             public void onFailure(Call<List<getNameResponse>> call, Throwable t) {
-                Toast.makeText(context,"Fail to send a request.",Toast.LENGTH_SHORT).show();
+                makeFailureToast();
             }
         });
     }
@@ -100,9 +100,13 @@ public class AppUtility {
 
             @Override
             public void onFailure(Call<List<agendaForClientResponse>> call, Throwable t) {
-                Toast.makeText(context,"Fail to send a request.",Toast.LENGTH_SHORT).show();
+                makeFailureToast();
             }
         });
+    }
+
+    public static void makeFailureToast(){
+        Toast.makeText(context, "Fail to send a request.", Toast.LENGTH_SHORT).show();
     }
 
 }

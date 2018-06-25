@@ -41,11 +41,11 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
     public void onBindViewHolder(ViewHolder holder, final int position){
         holder.title.setText(mAgendaTitle[position]);
         holder.description.setText(mAgendaDescription[position]);
-        if(position%2==0){
-            holder.view.setBackgroundColor(Color.parseColor("#80F0D1"));
-        }else{
-            holder.view.setBackgroundColor(Color.parseColor("#BAF080"));
-        }
+//        if(position%2==0){
+//            holder.view.setBackgroundColor(Color.parseColor("#80F0D1"));
+//        }else{
+//            holder.view.setBackgroundColor(Color.parseColor("#BAF080"));
+//        }
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
