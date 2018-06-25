@@ -24,7 +24,6 @@ public class Authority {
     private static String[] authorities_th;
     private static String[] authorities_en;
     private static String[] authorities_availability;
-    //private static String[] authorities_en = {"Mr.Antimage", "Mr.Bunny", "Mr.Chicken", "Mr.D Luffy"};
 
     private static String selectMessage(String voteType){
         //return "Please confirm voting " + voteType.toUpperCase() + " for this agenda item.\nYou're using the authority of:";
@@ -52,8 +51,8 @@ public class Authority {
                     for(int i=0;i<response.body().size();++i){
                         checkAuthorityForVoteAllResponse anAuth = response.body().get(i);
                         authorities_id[i] = anAuth.getId();
-                        authorities_th[i] = anAuth.getHolder_nameth()+" "+anAuth.getHolder_surnameth();
-                        authorities_en[i] = anAuth.getHolder_nameeng()+" "+anAuth.getHolder_surnameeng();
+                        authorities_th[i] = anAuth.getHolder_titleth()+anAuth.getHolder_nameth()+" "+anAuth.getHolder_surnameth();
+                        authorities_en[i] = anAuth.getHolder_titleeng()+anAuth.getHolder_nameeng()+" "+anAuth.getHolder_surnameeng();
                         authorities_availability[i] = anAuth.getCheckAuthorityForVoteAll();
                     }
                     callback.run();
@@ -103,7 +102,17 @@ public class Authority {
                 RecyclerView recyclerView = (RecyclerView) dialog.findViewById(R.id.recycler_view);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(new LinearLayoutManager(AppUtility.getCurrentContext()));
-                recyclerView.setAdapter(new AuthorityListAdapter(AppUtility.getCurrentContext(),authorities_en,AppUtility.active_vote_type,AppUtility.active_agenda));
+                recyclerView.setAdapter(
+                        new AuthorityListAdapter(
+                                AppUtility.getCurrentContext(),
+                                authorities_id,
+                                authorities_en,
+                                authorities_th,
+                                authorities_availability,
+                                AppUtility.active_vote_type,
+                                AppUtility.active_agenda
+                        )
+                );
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
