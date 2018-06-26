@@ -12,24 +12,27 @@ import android.widget.TextView;
 
 public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAdapter.ViewHolder> {
     private String[] mAgendaTitle;
+    private String[] mAgendaFullTitle;
     private String[] mAgendaDescription;
+    private int[] mAgendaID;
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public View view;
-        public TextView title,description;
+        public TextView title;
         public ViewHolder(View v){
             super(v);
             view = v;
             title = v.findViewById(R.id.title);
-            description = v.findViewById(R.id.description);
         }
     }
 
     public AgendaItemListAdapter(int[] ids,String[] titles,String[] full_titles,String[] descriptions){
         this.context = AppUtility.getCurrentContext();
+        this.mAgendaID = ids;
         this.mAgendaTitle = titles;
         this.mAgendaDescription = descriptions;
+        this.mAgendaFullTitle = full_titles;
     }
 
     public AgendaItemListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
@@ -40,7 +43,6 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
 
     public void onBindViewHolder(ViewHolder holder, final int position){
         holder.title.setText(mAgendaTitle[position]);
-        holder.description.setText(mAgendaDescription[position]);
 //        if(position%2==0){
 //            holder.view.setBackgroundColor(Color.parseColor("#80F0D1"));
 //        }else{
@@ -50,8 +52,9 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context,ViewAgendaItem.class);
-                intent.putExtra("title",mAgendaTitle[position]);
+                intent.putExtra("title",mAgendaFullTitle[position]);
                 intent.putExtra("description",mAgendaDescription[position]);
+                AppUtility.active_agenda = mAgendaID[position];
                 context.startActivity(intent);
             }
         });

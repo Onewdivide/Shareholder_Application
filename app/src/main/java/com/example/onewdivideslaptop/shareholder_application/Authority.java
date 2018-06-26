@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.onewdivideslaptop.shareholder_application.responseModel.checkAuthorityForVoteAgendaResponse;
 import com.example.onewdivideslaptop.shareholder_application.responseModel.checkAuthorityForVoteAllResponse;
+import com.google.android.gms.auth.api.Auth;
 
 import java.util.List;
 
@@ -24,6 +25,16 @@ public class Authority {
     private static String[] authorities_th;
     private static String[] authorities_en;
     private static String[] authorities_availability;
+    private static boolean need_update;
+    public static Dialog active_dialog;
+
+    static{
+        need_update = true;
+    }
+
+    public static void requireUpdate(){
+        Authority.need_update = true;
+    }
 
     private static String selectMessage(String voteType){
         //return "Please confirm voting " + voteType.toUpperCase() + " for this agenda item.\nYou're using the authority of:";
@@ -37,62 +48,70 @@ public class Authority {
         }
     }
 
-    private static void getAuthorities(final Runnable callback) {
+    public static String[] getAuthIDs(){
+        return authorities_id;
+    }
 
-        if(AppUtility.active_agenda==AppUtility.AGENDA_ALL) {
-            Call<List<checkAuthorityForVoteAllResponse>> call = AppUtility.client.checkAuthorityForVoteAll(AppUtility.getDelegateId());
-            call.enqueue(new Callback<List<checkAuthorityForVoteAllResponse>>() {
-                @Override
-                public void onResponse(Call<List<checkAuthorityForVoteAllResponse>> call, Response<List<checkAuthorityForVoteAllResponse>> response) {
-                    authorities_id = new String[response.body().size()];
-                    authorities_th = new String[response.body().size()];
-                    authorities_en = new String[response.body().size()];
-                    authorities_availability = new String[response.body().size()];
-                    for(int i=0;i<response.body().size();++i){
-                        checkAuthorityForVoteAllResponse anAuth = response.body().get(i);
-                        authorities_id[i] = anAuth.getId();
-                        authorities_th[i] = anAuth.getHolder_titleth()+anAuth.getHolder_nameth()+" "+anAuth.getHolder_surnameth();
-                        authorities_en[i] = anAuth.getHolder_titleeng()+anAuth.getHolder_nameeng()+" "+anAuth.getHolder_surnameeng();
-                        authorities_availability[i] = anAuth.getCheckAuthorityForVoteAll();
+    public static void getAuthorities(final Runnable callback) {
+        if(need_update) {
+            if (AppUtility.active_agenda == AppUtility.AGENDA_ALL) {
+                Call<List<checkAuthorityForVoteAllResponse>> call = AppUtility.client.checkAuthorityForVoteAll(AppUtility.getDelegateId());
+                call.enqueue(new Callback<List<checkAuthorityForVoteAllResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<checkAuthorityForVoteAllResponse>> call, Response<List<checkAuthorityForVoteAllResponse>> response) {
+                        authorities_id = new String[response.body().size()];
+                        authorities_th = new String[response.body().size()];
+                        authorities_en = new String[response.body().size()];
+                        authorities_availability = new String[response.body().size()];
+                        for (int i = 0; i < response.body().size(); ++i) {
+                            checkAuthorityForVoteAllResponse anAuth = response.body().get(i);
+                            authorities_id[i] = anAuth.getId();
+                            authorities_th[i] = anAuth.getHolder_titleth() + anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
+                            authorities_en[i] = anAuth.getHolder_titleeng() + anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
+                            authorities_availability[i] = anAuth.getCheckAuthorityForVoteAll();
+                        }
+                        need_update = false;
+                        callback.run();
                     }
-                    callback.run();
-                }
 
-                @Override
-                public void onFailure(Call<List<checkAuthorityForVoteAllResponse>> call, Throwable t) {
-                    AppUtility.makeFailureToast();
-                }
-            });
-        }
-
-        else{
-            Call<List<checkAuthorityForVoteAgendaResponse>> call = AppUtility.client.checkAuthorityForVote(AppUtility.active_agenda,AppUtility.getDelegateId());
-            call.enqueue(new Callback<List<checkAuthorityForVoteAgendaResponse>>() {
-                @Override
-                public void onResponse(Call<List<checkAuthorityForVoteAgendaResponse>> call, Response<List<checkAuthorityForVoteAgendaResponse>> response) {
-                    authorities_id = new String[response.body().size()];
-                    authorities_th = new String[response.body().size()];
-                    authorities_en = new String[response.body().size()];
-                    authorities_availability = new String[response.body().size()];
-                    for(int i=0;i<response.body().size();++i){
-                        checkAuthorityForVoteAgendaResponse anAuth = response.body().get(i);
-                        authorities_id[i] = anAuth.getId();
-                        authorities_th[i] = anAuth.getHolder_nameth()+" "+anAuth.getHolder_surnameth();
-                        authorities_en[i] = anAuth.getHolder_nameeng()+" "+anAuth.getHolder_surnameeng();
-                        authorities_availability[i] = anAuth.getCheckauthorityforthisagenda();
+                    @Override
+                    public void onFailure(Call<List<checkAuthorityForVoteAllResponse>> call, Throwable t) {
+                        AppUtility.makeFailureToast();
                     }
-                    callback.run();
-                }
+                });
+            } else {
+                Call<List<checkAuthorityForVoteAgendaResponse>> call = AppUtility.client.checkAuthorityForVote(AppUtility.active_agenda, AppUtility.getDelegateId());
+                call.enqueue(new Callback<List<checkAuthorityForVoteAgendaResponse>>() {
+                    @Override
+                    public void onResponse(Call<List<checkAuthorityForVoteAgendaResponse>> call, Response<List<checkAuthorityForVoteAgendaResponse>> response) {
+                        authorities_id = new String[response.body().size()];
+                        authorities_th = new String[response.body().size()];
+                        authorities_en = new String[response.body().size()];
+                        authorities_availability = new String[response.body().size()];
+                        for (int i = 0; i < response.body().size(); ++i) {
+                            checkAuthorityForVoteAgendaResponse anAuth = response.body().get(i);
+                            authorities_id[i] = anAuth.getId();
+                            authorities_th[i] = anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
+                            authorities_en[i] = anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
+                            authorities_availability[i] = anAuth.getCheckauthorityforthisagenda();
+                        }
+                        need_update = false;
+                        callback.run();
+                    }
 
-                @Override
-                public void onFailure(Call<List<checkAuthorityForVoteAgendaResponse>> call, Throwable t) {
-                    AppUtility.makeFailureToast();
-                }
-            });
+                    @Override
+                    public void onFailure(Call<List<checkAuthorityForVoteAgendaResponse>> call, Throwable t) {
+                        AppUtility.makeFailureToast();
+                    }
+                });
+            }
+        }else{
+            callback.run();
         }
     }
 
     public static void selectAuthority(final Dialog dialog) {
+        active_dialog = dialog;
         getAuthorities(new Runnable() {
             @Override
             public void run() {
@@ -117,5 +136,12 @@ public class Authority {
                 dialog.show();
             }
         });
+    }
+
+    public static boolean anyAuthAvailable(){
+        for(int i=0;i<authorities_availability.length;++i){
+            if(authorities_availability[i].equals("true")) return true;
+        }
+        return false;
     }
 }

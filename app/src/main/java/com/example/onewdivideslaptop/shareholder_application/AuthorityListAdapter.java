@@ -85,14 +85,21 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
                     yesButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // show inform popup
-                            View layout = LayoutInflater.from(context).inflate(R.layout.inform_popup,null,false);
-                            ((TextView) layout.findViewById(R.id.message)).setText("ออกคะแนนเสียง \""+getThaiWord(voteType)+"\" ในสิทธิ์ของทุกคนเรียบร้อยแล้ว!");
-                            Toast toast = new Toast(context);
-                            toast.setView(layout);
-                            toast.setDuration(Toast.LENGTH_SHORT);
-                            dialog.dismiss();
-                            toast.show();
+                            AppUtility.active_auth = AppUtility.AUTH_ALL;
+                            AppUtility.commitVote(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // show inform popup
+                                    View layout = LayoutInflater.from(context).inflate(R.layout.inform_popup,null,false);
+                                    ((TextView) layout.findViewById(R.id.message)).setText("ออกคะแนนเสียง \""+getThaiWord(voteType)+"\" ในสิทธิ์ของทุกคนเรียบร้อยแล้ว!");
+                                    Toast toast = new Toast(context);
+                                    toast.setView(layout);
+                                    toast.setDuration(Toast.LENGTH_SHORT);
+                                    dialog.dismiss();
+                                    Authority.active_dialog.dismiss();
+                                    toast.show();
+                                }
+                            });
                         }
                     });
 
@@ -123,14 +130,21 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
                     yesButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            // show inform popup
-                            View layout = LayoutInflater.from(context).inflate(R.layout.inform_popup,null,false);
-                            ((TextView) layout.findViewById(R.id.message)).setText("ออกคะแนนเสียง \""+getThaiWord(voteType)+"\" ในสิทธิ์ของ "+ authorities_th[position]+" เรียบร้อยแล้ว!");
-                            Toast toast = new Toast(context);
-                            toast.setView(layout);
-                            toast.setDuration(Toast.LENGTH_SHORT);
-                            dialog.dismiss();
-                            toast.show();
+                            AppUtility.active_auth = authorities_id[position];
+                            AppUtility.commitVote(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // show inform popup
+                                    View layout = LayoutInflater.from(context).inflate(R.layout.inform_popup,null,false);
+                                    ((TextView) layout.findViewById(R.id.message)).setText("ออกคะแนนเสียง \""+getThaiWord(voteType)+"\" ในสิทธิ์ของ "+ authorities_th[position]+" เรียบร้อยแล้ว!");
+                                    Toast toast = new Toast(context);
+                                    toast.setView(layout);
+                                    toast.setDuration(Toast.LENGTH_SHORT);
+                                    dialog.dismiss();
+                                    Authority.active_dialog.dismiss();
+                                    toast.show();
+                                }
+                            });
                         }
                     });
 
@@ -146,11 +160,10 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
                     dialog.show();
                 }
             });
-        }
-
-        if(authorities_availability[position].equals("false")){
-            holder.button.setEnabled(false);
-            holder.button.setTextColor(Color.parseColor("#FFFFFF"));
+            if(authorities_availability[position].equals("false")){
+                holder.button.setEnabled(false);
+                holder.button.setTextColor(Color.parseColor("#FFFFFF"));
+            }
         }
     }
 

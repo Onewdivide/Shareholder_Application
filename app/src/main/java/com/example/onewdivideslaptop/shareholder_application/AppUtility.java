@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.example.onewdivideslaptop.shareholder_application.responseModel.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,10 +20,12 @@ public class AppUtility {
 
     private static Context context;
     public static Context mainPage;
-    private static int delegate_id;
+    private static String delegate_id;
     private static String th_name, en_name;
     public static int active_agenda;
     public static final int AGENDA_ALL = -1;
+    public static String active_auth;
+    public static final String AUTH_ALL = "AUTH_ALL";
     public static String active_vote_type;
     public static final String VOTE_AGREE = "yes";
     public static final String VOTE_DISAGREE = "no";
@@ -35,6 +38,7 @@ public class AppUtility {
     }
 
     public static void focus(Context context){
+        Authority.requireUpdate();
         AppUtility.context = context;
     }
 
@@ -43,10 +47,9 @@ public class AppUtility {
     }
 
     public static void login(final String delegate_id,final Runnable callback){
-        AppUtility.delegate_id = Integer.parseInt(delegate_id);
         AppUtility.th_name = null;
         AppUtility.en_name = null;
-        Call<List<getNameResponse>> call = client.getName(AppUtility.delegate_id);
+        Call<List<getNameResponse>> call = client.getName(delegate_id);
         call.enqueue(new Callback<List<getNameResponse>>() {
             @Override
             public void onResponse(Call<List<getNameResponse>> call, Response<List<getNameResponse>> response) {
@@ -56,6 +59,7 @@ public class AppUtility {
                     getNameResponse delegate = response.body().get(0);
                     AppUtility.th_name = delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
                     AppUtility.en_name = delegate.getDelegate_nameeng()+" "+delegate.getDelegate_surnameeng();
+                    AppUtility.delegate_id = delegate.getDelegate_id();
                     callback.run();
                 }
             }
@@ -67,7 +71,7 @@ public class AppUtility {
         });
     }
 
-    public static int getDelegateId(){
+    public static String getDelegateId(){
         return delegate_id;
     }
 
@@ -107,6 +111,63 @@ public class AppUtility {
 
     public static void makeFailureToast(){
         Toast.makeText(context, "Fail to send a request.", Toast.LENGTH_SHORT).show();
+    }
+
+    public static void commitVote(final Runnable callback){
+        //============================== VOTE ALL ==============================
+        if(active_agenda==AGENDA_ALL){
+            // put auth to list
+            List<voteAllResponse> auth_to_vote = new ArrayList<>();
+            if(active_auth.equals(AUTH_ALL)){
+                String[] auth_id = Authority.getAuthIDs();
+                for(int i=0;i<auth_id.length;++i){
+                    auth_to_vote.add(new voteAllResponse(auth_id[i]));
+                }
+            } else{
+                auth_to_vote.add(new voteAllResponse(active_auth));
+            }
+            // send a request
+            Call<String> call = client.voteAll(active_vote_type,auth_to_vote);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    callback.run();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    makeFailureToast();
+                }
+            });
+        }
+        //============================== VOTE ONE ==============================
+        else{
+            // put auth to list
+            List<voteResponse> auth_to_vote = new ArrayList<>();
+            if(active_auth.equals(AUTH_ALL)){
+                String[] auth_id = Authority.getAuthIDs();
+                for(int i=0;i<auth_id.length;++i){
+                    auth_to_vote.add(new voteResponse(auth_id[i]));
+                }
+            } else{
+                auth_to_vote.add(new voteResponse(active_auth));
+            }
+            // send a request
+            Call<String> call = client.vote(active_vote_type,active_agenda,auth_to_vote);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    callback.run();
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    makeFailureToast();
+                }
+            });
+        }
+
+        Authority.requireUpdate();
     }
 
 }

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
@@ -58,7 +59,14 @@ public class UsernameLogin extends AppCompatActivity {
 
         public void showConfirmPopup(View v){
             String delegateId = usernameInput.getText().toString();
-            if(!isValidId(delegateId)) return;
+            if(delegateId.length()==0){
+                Toast.makeText(this,"กรุณาใส่ Serial Number",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(!isValidId(delegateId)){
+                Toast.makeText(this,"กรุณาใส่เพียงตัวเลข",Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             AppUtility.login(delegateId, new Runnable() {
                 @Override
