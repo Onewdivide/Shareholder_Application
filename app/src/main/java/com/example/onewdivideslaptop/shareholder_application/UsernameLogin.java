@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class UsernameLogin extends AppCompatActivity {
 
@@ -27,6 +28,18 @@ public class UsernameLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_username_login);
 
+        AppUtility.focus(this);
+
+        dialog = new Dialog(this);
+
+        usernameInput = (EditText) findViewById(R.id.serial_num_field);
+
+        Intent intent = getIntent();
+        if (intent.getStringExtra("Username") != null){
+            Log.e("username from QR :",intent.getStringExtra("Username"));
+            usernameInput.setText(intent.getStringExtra("Username"));
+        }
+
         backBtn = (ImageButton) findViewById(R.id.back_button);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,29 +53,56 @@ public class UsernameLogin extends AppCompatActivity {
         }
 
         public void showConfirmPopup(View v){
-            dialog.setContentView(R.layout.login_popup);
-            TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
-            Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+            String delegateId = usernameInput.getText().toString();
+            if(delegateId.length()==0){
+                Toast.makeText(this,"กรุณาใส่ Serial Number",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(!isValidId(delegateId)){
+                Toast.makeText(this,"กรุณาใส่เพียงตัวเลข",Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-            yesBtn.setOnClickListener(new View.OnClickListener() {
+            AppUtility.login(delegateId, new Runnable() {
                 @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(UsernameLogin.this,MainPage.class);
-                    startActivity(intent);
+                public void run() {
+                    dialog.setContentView(R.layout.login_popup);
+                    TextView txtClose = (TextView) dialog.findViewById(R.id.txtClose);
+                    Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+                    Button noBtn = (Button) dialog.findViewById(R.id.noBtn);
+
+                    TextView usernameTextView = dialog.findViewById(R.id.Username);
+                    usernameTextView.setText(AppUtility.getDelegateThaiName()+"\n"+AppUtility.getDelegateEngName());
+
+                    yesBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(UsernameLogin.this, MainPage.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    noBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    Log.e("popUp", "Show");
+                    txtClose.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Log.e("popUp", "Close");
+                            dialog.dismiss();
+                        }
+                    });
+
+                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    dialog.show();
                 }
             });
 
-            Log.e("popUp","Show");
-            txtClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("popUp","Close");
-                    dialog.dismiss();
-                }
-            });
-
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.show();
         }
 
 }

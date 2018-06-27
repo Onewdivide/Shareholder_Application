@@ -22,7 +22,7 @@
             android:background="@color/topbar_background">
 
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/welcome_msg"
                 android:layout_width="320dp"
                 android:layout_height="106dp"
                 android:layout_gravity="center_horizontal"
