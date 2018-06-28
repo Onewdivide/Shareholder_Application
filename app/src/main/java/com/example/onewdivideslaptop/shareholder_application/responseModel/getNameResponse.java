@@ -2,7 +2,7 @@ package com.example.onewdivideslaptop.shareholder_application.responseModel;
 
 public class getNameResponse {
 
-    String delegate_id,delegate_nameth,delegate_surnameth,delegate_nameeng,delegate_surnameeng;
+    String delegate_id,delegate_nameth,delegate_surnameth,delegate_nameeng,delegate_surnameeng,token;
 
 
 
@@ -24,5 +24,9 @@ public class getNameResponse {
 
     public String getDelegate_surnameeng() {
         return delegate_surnameeng;
+    }
+
+    public String getToken(){
+        return token;
     }
 }
