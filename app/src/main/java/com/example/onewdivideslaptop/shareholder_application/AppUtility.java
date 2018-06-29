@@ -21,6 +21,7 @@ public class AppUtility {
     private static Context context;
     public static Context mainPage;
     private static String delegate_id;
+    public static String token;
     private static String th_name, en_name;
     public static int active_agenda;
     public static final int AGENDA_ALL = -1;
@@ -60,6 +61,7 @@ public class AppUtility {
                     AppUtility.th_name = delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
                     AppUtility.en_name = delegate.getDelegate_nameeng()+" "+delegate.getDelegate_surnameeng();
                     AppUtility.delegate_id = delegate.getDelegate_id();
+                    AppUtility.token = delegate.getToken();
                     callback.run();
                 }
             }
@@ -84,7 +86,7 @@ public class AppUtility {
     }
 
     public static void fetchAgenda(final Runnable callback){
-        Call<List<agendaForClientResponse>> call = client.getAllagenda();
+        Call<List<agendaForClientResponse>> call = client.getAllagenda(AppUtility.token);
         call.enqueue(new Callback<List<agendaForClientResponse>>() {
             @Override
             public void onResponse(Call<List<agendaForClientResponse>> call, Response<List<agendaForClientResponse>> response) {
@@ -127,7 +129,7 @@ public class AppUtility {
                 auth_to_vote.add(new voteAllResponse(active_auth));
             }
             // send a request
-            Call<String> call = client.voteAll(active_vote_type,auth_to_vote);
+            Call<String> call = client.voteAll(AppUtility.token,active_vote_type,auth_to_vote);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -153,7 +155,7 @@ public class AppUtility {
                 auth_to_vote.add(new voteResponse(active_auth));
             }
             // send a request
-            Call<String> call = client.vote(active_vote_type,active_agenda,auth_to_vote);
+            Call<String> call = client.vote(AppUtility.token,active_vote_type,active_agenda,auth_to_vote);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {

@@ -55,7 +55,7 @@ public class Authority {
     public static void getAuthorities(final Runnable callback) {
         if(need_update) {
             if (AppUtility.active_agenda == AppUtility.AGENDA_ALL) {
-                Call<List<checkAuthorityForVoteAllResponse>> call = AppUtility.client.checkAuthorityForVoteAll(AppUtility.getDelegateId());
+                Call<List<checkAuthorityForVoteAllResponse>> call = AppUtility.client.checkAuthorityForVoteAll(AppUtility.token,AppUtility.getDelegateId());
                 call.enqueue(new Callback<List<checkAuthorityForVoteAllResponse>>() {
                     @Override
                     public void onResponse(Call<List<checkAuthorityForVoteAllResponse>> call, Response<List<checkAuthorityForVoteAllResponse>> response) {
@@ -80,7 +80,7 @@ public class Authority {
                     }
                 });
             } else {
-                Call<List<checkAuthorityForVoteAgendaResponse>> call = AppUtility.client.checkAuthorityForVote(AppUtility.active_agenda, AppUtility.getDelegateId());
+                Call<List<checkAuthorityForVoteAgendaResponse>> call = AppUtility.client.checkAuthorityForVote(AppUtility.token,AppUtility.active_agenda, AppUtility.getDelegateId());
                 call.enqueue(new Callback<List<checkAuthorityForVoteAgendaResponse>>() {
                     @Override
                     public void onResponse(Call<List<checkAuthorityForVoteAgendaResponse>> call, Response<List<checkAuthorityForVoteAgendaResponse>> response) {
