@@ -8,8 +8,7 @@ public class checkAuthorityForVoteAgendaResponse {
             ,holder_titleeng
             ,holder_nameeng
             ,holder_surnameeng
-            ,checkauthorityforthisagenda
-            ,votealready;
+            ,checkauthorityforthisagenda;
 
 
     public String getId() {
@@ -42,9 +41,5 @@ public class checkAuthorityForVoteAgendaResponse {
 
     public String getCheckauthorityforthisagenda() {
         return checkauthorityforthisagenda;
-    }
-
-    public String getVotealready() {
-        return votealready;
     }
 }

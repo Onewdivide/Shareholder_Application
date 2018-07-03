@@ -1,17 +1,16 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.onewdivideslaptop.shareholder_application.responseModel.checkAuthorityForVoteAgendaResponse;
 import com.example.onewdivideslaptop.shareholder_application.responseModel.checkAuthorityForVoteAllResponse;
-import com.google.android.gms.auth.api.Auth;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ import retrofit2.Response;
 
 public class Authority {
 
-    private static String[] authorities_id;
+    public static String[] authorities_id;
     private static String[] authorities_th;
     private static String[] authorities_en;
     private static String[] authorities_availability;
@@ -37,7 +36,6 @@ public class Authority {
     }
 
     private static String selectMessage(String voteType){
-        //return "Please confirm voting " + voteType.toUpperCase() + " for this agenda item.\nYou're using the authority of:";
         if(voteType.equals(AppUtility.VOTE_NOCOMMENT)){
             return "ต้องการ \"ไม่ออกความเห็น\"\nในสิทธิ์ของ";
         } else{
@@ -68,7 +66,7 @@ public class Authority {
                             authorities_id[i] = anAuth.getId();
                             authorities_th[i] = anAuth.getHolder_titleth() + anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
                             authorities_en[i] = anAuth.getHolder_titleeng() + anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
-                            authorities_availability[i] = anAuth.getCheckAuthorityForVoteAll();
+                            authorities_availability[i] = Integer.parseInt(anAuth.getCount())>0?"yes":"no";
                         }
                         need_update = false;
                         callback.run();
@@ -96,6 +94,7 @@ public class Authority {
                             authorities_availability[i] = anAuth.getCheckauthorityforthisagenda();
                         }
                         need_update = false;
+                        Log.e("GetAuth", TextUtils.join(" ",authorities_availability));
                         callback.run();
                     }
 
@@ -140,7 +139,7 @@ public class Authority {
 
     public static boolean anyAuthAvailable(){
         for(int i=0;i<authorities_availability.length;++i){
-            if(authorities_availability[i].equals("true")) return true;
+            if(authorities_availability[i].equals("yes")) return true;
         }
         return false;
     }

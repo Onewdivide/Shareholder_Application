@@ -1,11 +1,16 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
 import android.content.Context;
+import android.util.Pair;
 import android.widget.Toast;
 
 import com.example.onewdivideslaptop.shareholder_application.responseModel.*;
+import com.example.onewdivideslaptop.shareholder_application.task.GetRightTask;
+import com.example.onewdivideslaptop.shareholder_application.task.Task;
+import com.example.onewdivideslaptop.shareholder_application.task.VoteTask;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +38,7 @@ public class AppUtility {
     public static final String VOTE_NOCOMMENT = "nocomment";
     public static String[] agenda_titles, agenda_full_titles, agenda_descriptions;
     public static int[] agenda_ids;
+    public static ArrayList<Pair<String,ArrayList<voteResponse>>> getTeskResult;
 
     static{
         client = (new Retrofit.Builder()).baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).build().create(shareHolderClient.class);
@@ -41,6 +47,9 @@ public class AppUtility {
     public static void focus(Context context){
         Authority.requireUpdate();
         AppUtility.context = context;
+        if(AppUtility.context==AppUtility.mainPage){
+            active_agenda = AGENDA_ALL;
+        }
     }
 
     public static Context getCurrentContext(){
@@ -118,6 +127,21 @@ public class AppUtility {
     public static void commitVote(final Runnable callback){
         //============================== VOTE ALL ==============================
         if(active_agenda==AGENDA_ALL){
+            final GetRightTask getTask;
+            Runnable onGetSucces = new Runnable() {
+                @Override
+                public void run() {
+                    (new VoteTask(getTeskResult, callback)).perform();
+                }
+            };
+            if(active_auth==AUTH_ALL){
+                getTask = new GetRightTask(new ArrayList<>(Arrays.asList(Authority.authorities_id)),onGetSucces);
+            }else{
+                getTask = new GetRightTask(active_auth,onGetSucces);
+            }
+            getTask.perform();
+
+            /*
             // put auth to list
             List<voteAllResponse> auth_to_vote = new ArrayList<>();
             if(active_auth.equals(AUTH_ALL)){
@@ -141,6 +165,7 @@ public class AppUtility {
                     makeFailureToast();
                 }
             });
+            */
         }
         //============================== VOTE ONE ==============================
         else{

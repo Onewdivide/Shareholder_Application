@@ -33,4 +33,7 @@ public interface shareHolderClient {
 
     @PATCH("/vote/{voteChoice}/{agenda_Id}")
     Call<String> vote(@Header("Authorization") String token, @Path("voteChoice") String voteChoice, @Path("agenda_Id") int agenda_Id, @Body List<voteResponse> voteBody);
+
+    @GET("/checkRemainRight/{holder_id}")
+    Call<List<checkRemainRightResponse>> checkRemainRight(@Header("Authorization") String token, @Path("holder_id") String holder_id);
 }

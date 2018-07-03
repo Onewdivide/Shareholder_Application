@@ -44,7 +44,7 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
         this.dialog = new Dialog(context);
         this.itemCount = authorities_id.length+1;
         for(int i=0;i<authorities_id.length;++i){
-            if(authorities_availability[i].equals("false")){
+            if(authorities_availability[i].equals("no")){
                 this.itemCount -= 1;
                 break;
             }
@@ -160,7 +160,7 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
                     dialog.show();
                 }
             });
-            if(authorities_availability[position].equals("false")){
+            if(authorities_availability[position].equals("no")){
                 holder.button.setEnabled(false);
                 holder.button.setTextColor(Color.parseColor("#FFFFFF"));
             }

@@ -25,6 +25,7 @@ public class MainPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        AppUtility.active_agenda = AppUtility.AGENDA_ALL;
         Authority.getAuthorities(new Runnable() {
             @Override
             public void run() {
@@ -91,6 +92,10 @@ public class MainPage extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    public void updateButton(){
 
     }
 
