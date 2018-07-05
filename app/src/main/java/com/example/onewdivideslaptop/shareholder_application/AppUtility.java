@@ -67,8 +67,8 @@ public class AppUtility {
                     Toast.makeText(context,"Serial number not found.",Toast.LENGTH_SHORT).show();
                 }else{
                     getNameResponse delegate = response.body().get(0);
-                    AppUtility.th_name = delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
-                    AppUtility.en_name = delegate.getDelegate_nameeng()+" "+delegate.getDelegate_surnameeng();
+                    AppUtility.th_name = delegate.getDelegate_titleth()+delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
+                    AppUtility.en_name = delegate.getDelegate_titleeng()+delegate.getDelegate_nameeng()+" "+delegate.getDelegate_surnameeng();
                     AppUtility.delegate_id = delegate.getDelegate_id();
                     AppUtility.token = delegate.getToken();
                     callback.run();

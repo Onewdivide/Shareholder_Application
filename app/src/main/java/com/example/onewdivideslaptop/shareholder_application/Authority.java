@@ -89,8 +89,8 @@ public class Authority {
                         for (int i = 0; i < response.body().size(); ++i) {
                             checkAuthorityForVoteAgendaResponse anAuth = response.body().get(i);
                             authorities_id[i] = anAuth.getId();
-                            authorities_th[i] = anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
-                            authorities_en[i] = anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
+                            authorities_th[i] = anAuth.getHolder_titleth() + anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
+                            authorities_en[i] = anAuth.getHolder_titleeng() + anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
                             authorities_availability[i] = anAuth.getCheckauthorityforthisagenda();
                         }
                         need_update = false;

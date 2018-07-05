@@ -67,6 +67,7 @@ public class GetRightTask extends Task {
                 @Override
                 public void onFailure(Call<List<checkRemainRightResponse>> call, Throwable t) {
                     reset();
+                    perform();
                 }
             });
         }
