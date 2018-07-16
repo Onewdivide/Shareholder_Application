@@ -1,6 +1,7 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
@@ -20,7 +21,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppUtility {
-    private static final String baseURL = "http://192.168.137.1:3137/";
+    //private static final String baseURL = "http://172.20.10.3:8081/"; //PJ
+    private static final String baseURL = "http://172.20.10.6:8081/"; //PJ
+    //private static final String baseURL = "http://192.168.137.1:8081/"; //PM
     public static shareHolderClient client;
 
     private static Context context;
@@ -45,10 +48,14 @@ public class AppUtility {
     }
 
     public static void focus(Context context){
+        boolean changeToMain = (getCurrentContext()!=mainPage && context==mainPage);
         Authority.requireUpdate();
         AppUtility.context = context;
         if(AppUtility.context==AppUtility.mainPage){
             active_agenda = AGENDA_ALL;
+        }
+        if(changeToMain){
+            ((MainPage)mainPage).refresh();
         }
     }
 
@@ -125,6 +132,7 @@ public class AppUtility {
     }
 
     public static void commitVote(final Runnable callback){
+        Log.e("Vote Commit",active_vote_type+" for agenda "+active_agenda+" with "+active_auth);
         //============================== VOTE ALL ==============================
         if(active_agenda==AGENDA_ALL){
             final GetRightTask getTask;

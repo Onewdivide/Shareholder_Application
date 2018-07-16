@@ -79,11 +79,7 @@ public class MainPage extends AppCompatActivity {
                     }
                 });
 
-                if(!Authority.anyAuthAvailable()) {
-                    voteAgreeButton.setEnabled(false);
-                    voteDisagreeButton.setEnabled(false);
-                    voteNoCommentButton.setEnabled(false);
-                }
+                validateButton();
 
                 welcomeMessage = (TextView) findViewById(R.id.welcome_msg);
                 welcomeMessage.setText("ยินดีต้อนรับ คุณ"
@@ -95,13 +91,35 @@ public class MainPage extends AppCompatActivity {
 
     }
 
-    public void updateButton(){
-
-    }
-
     @Override
     public void onBackPressed(){
 
+    }
+
+    public void validateButton(){
+        if(!Authority.anyAuthAvailable()) {
+            voteAgreeButton.setEnabled(false);
+            voteDisagreeButton.setEnabled(false);
+            voteNoCommentButton.setEnabled(false);
+        }else{
+            voteAgreeButton.setEnabled(true);
+            voteDisagreeButton.setEnabled(true);
+            voteNoCommentButton.setEnabled(true);
+        }
+    }
+
+    public void refresh(){
+        /*
+        finish();
+        startActivity(getIntent());
+        */
+        Authority.requireUpdate();
+        Authority.getAuthorities(new Runnable() {
+            @Override
+            public void run() {
+                validateButton();
+            }
+        });
     }
 
 }

@@ -4,6 +4,7 @@ import android.util.Pair;
 import android.widget.Toast;
 
 import com.example.onewdivideslaptop.shareholder_application.AppUtility;
+import com.example.onewdivideslaptop.shareholder_application.MainPage;
 import com.example.onewdivideslaptop.shareholder_application.responseModel.voteResponse;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class VoteTask extends Task {
             if(error){
                 informTaskIncompleteness();
             }else{
+                ((MainPage)AppUtility.mainPage).refresh();
                 onSuccess.run();
             }
         }else{

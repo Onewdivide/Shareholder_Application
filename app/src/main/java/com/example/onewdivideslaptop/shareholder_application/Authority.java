@@ -67,6 +67,7 @@ public class Authority {
                             authorities_th[i] = anAuth.getHolder_titleth() + anAuth.getHolder_nameth() + " " + anAuth.getHolder_surnameth();
                             authorities_en[i] = anAuth.getHolder_titleeng() + anAuth.getHolder_nameeng() + " " + anAuth.getHolder_surnameeng();
                             authorities_availability[i] = Integer.parseInt(anAuth.getCount())>0?"yes":"no";
+                            Log.e("Check VoteAll",anAuth.getId()+" : "+Integer.parseInt(anAuth.getCount()));
                         }
                         need_update = false;
                         callback.run();
@@ -94,7 +95,6 @@ public class Authority {
                             authorities_availability[i] = anAuth.getCheckauthorityforthisagenda();
                         }
                         need_update = false;
-                        Log.e("GetAuth", TextUtils.join(" ",authorities_availability));
                         callback.run();
                     }
 

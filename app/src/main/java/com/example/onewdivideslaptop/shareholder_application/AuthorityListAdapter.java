@@ -42,11 +42,13 @@ public class AuthorityListAdapter extends RecyclerView.Adapter<AuthorityListAdap
         this.agendaId = agendaId;
         this.context = context;
         this.dialog = new Dialog(context);
-        this.itemCount = authorities_id.length+1;
-        for(int i=0;i<authorities_id.length;++i){
-            if(authorities_availability[i].equals("no")){
-                this.itemCount -= 1;
-                break;
+        this.itemCount = authorities_id.length+(authorities_id.length==1?0:1);
+        if(authorities_id.length>1) {
+            for (int i = 0; i < authorities_id.length; ++i) {
+                if (authorities_availability[i].equals("no")) {
+                    this.itemCount -= 1;
+                    break;
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ public class UsernameLogin extends AppCompatActivity {
     Button loginBtn;
     Dialog dialog;
     EditText usernameInput;
-    Pattern delegateId_pattern = Pattern.compile("[0-9]+");
+    Pattern delegateId_pattern = Pattern.compile("[0-9a-zA-Z]+");
 
 
     @Override
