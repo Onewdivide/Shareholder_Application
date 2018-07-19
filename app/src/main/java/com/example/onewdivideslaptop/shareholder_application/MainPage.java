@@ -9,12 +9,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.AGENDA_ALL;
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_AGREE;
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_DISAGREE;
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_NOCOMMENT;
 
 public class MainPage extends AppCompatActivity {
+
+    public static String[] thai_month = {
+            "มกราคม",
+            "กุมภาพันธ์",
+            "มีนาคม",
+            "เมษายน",
+            "พฤษภาคม",
+            "มิถุนายน",
+            "กรกฎาคม",
+            "สิงหาคม",
+            "กันยายน",
+            "ตุลาคม",
+            "พฤศจิกายน",
+            "ธันวาคม",
+    };
 
     Button viewAllBtn,voteAgreeButton,voteDisagreeButton,voteNoCommentButton;
     TextView welcomeMessage;
@@ -33,6 +52,13 @@ public class MainPage extends AppCompatActivity {
 
                 AppUtility.mainPage = context;
                 AppUtility.focus(context);
+
+                ((Button)findViewById(R.id.refreshButton)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        refresh();
+                    }
+                });
 
                 viewAllBtn = (Button) findViewById(R.id.view_all_button);
                 viewAllBtn.setOnClickListener(new View.OnClickListener() {
@@ -81,10 +107,15 @@ public class MainPage extends AppCompatActivity {
 
                 validateButton();
 
+                int date = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                int year = Calendar.getInstance().get(Calendar.YEAR);
+
                 welcomeMessage = (TextView) findViewById(R.id.welcome_msg);
                 welcomeMessage.setText("ยินดีต้อนรับ คุณ"
                         + AppUtility.getDelegateThaiName()
-                        + "\nสู่การประชุมลงมติวาระ ครั้งที่ 1\nประจำวันที่ 22 มิถุนายน 2561");
+                        + "\nสู่การประชุมลงมติวาระ ประจำวันที่\n"
+                        +date+" "+thai_month[month]+" "+year);
             }
         });
 
@@ -109,10 +140,6 @@ public class MainPage extends AppCompatActivity {
     }
 
     public void refresh(){
-        /*
-        finish();
-        startActivity(getIntent());
-        */
         Authority.requireUpdate();
         Authority.getAuthorities(new Runnable() {
             @Override

@@ -40,17 +40,17 @@
             android:orientation="vertical"
             android:gravity="center_horizontal|center_vertical">
 
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="258dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="8dp"
+            <Button
+                android:id="@+id/refreshButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:background="@drawable/button_background"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="ลงคะแนนเสียงทั้งหมด"
+                android:text="โหลดวาระใหม่"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -65,6 +65,16 @@
                 android:paddingEnd="40dp"
                 android:background="@drawable/button_focus">
 
+                <TextView
+                    android:id="@+id/text3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="ลงคะแนนเสียงทั้งหมด"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"/>
+                
                 <Button
                     android:id="@+id/vote_agree_button"
                     android:layout_width="200dp"
@@ -100,11 +110,11 @@
             <Button
                 android:id="@+id/view_all_button"
                 android:layout_width="280dp"
-                android:layout_height="70dp"
-                android:layout_marginBottom="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:background="@drawable/button_background"
                 android:text="ดูวาระการประชุมทั้งหมด"
                 android:textSize="18sp" />
