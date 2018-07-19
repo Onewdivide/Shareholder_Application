@@ -74,7 +74,7 @@ public class AppUtility {
                     Toast.makeText(context,"Serial number not found.",Toast.LENGTH_SHORT).show();
                 }else{
                     getNameResponse delegate = response.body().get(0);
-                    AppUtility.th_name = delegate.getDelegate_titleth()+delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
+                    AppUtility.th_name = delegate.getDelegate_nameth()+" "+delegate.getDelegate_surnameth();
                     AppUtility.en_name = delegate.getDelegate_titleeng()+delegate.getDelegate_nameeng()+" "+delegate.getDelegate_surnameeng();
                     AppUtility.delegate_id = delegate.getDelegate_id();
                     AppUtility.token = delegate.getToken();
@@ -106,16 +106,26 @@ public class AppUtility {
         call.enqueue(new Callback<List<agendaForClientResponse>>() {
             @Override
             public void onResponse(Call<List<agendaForClientResponse>> call, Response<List<agendaForClientResponse>> response) {
-                agenda_ids = new int[response.body().size()];
-                agenda_titles = new String[response.body().size()];
-                agenda_full_titles = new String[response.body().size()];
-                agenda_descriptions = new String[response.body().size()];
+                int availableAgendaCount = 0;
+                ArrayList<Integer> availableIndex = new ArrayList<>();
                 for(int i=0;i<response.body().size();++i){
-                    agendaForClientResponse agenda = response.body().get(i);
-                    agenda_ids[i] = Integer.parseInt(agenda.getId());
-                    agenda_titles[i] = agenda.getTitle();
-                    agenda_full_titles[i] = agenda.getFull_title();
-                    agenda_descriptions[i] = agenda.getDetail();
+                    if(response.body().get(i).getEndPolling()==null){
+                        ++availableAgendaCount;
+                        availableIndex.add(i);
+                    }
+                }
+                agenda_ids = new int[availableAgendaCount];
+                agenda_titles = new String[availableAgendaCount];
+                agenda_full_titles = new String[availableAgendaCount];
+                agenda_descriptions = new String[availableAgendaCount];
+
+                for(int k=0;k<availableIndex.size();++k){
+                    agendaForClientResponse agenda = response.body().get(availableIndex.get(k));
+                    agenda_ids[k] = Integer.parseInt(agenda.getId());
+                    agenda_titles[k] = agenda.getTitle();
+                    agenda_full_titles[k] = agenda.getFull_title();
+                    agenda_descriptions[k] = agenda.getDetail();
+                    ++k;
                 }
                 callback.run();
             }

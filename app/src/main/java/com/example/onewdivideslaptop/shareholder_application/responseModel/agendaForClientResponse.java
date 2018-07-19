@@ -6,6 +6,7 @@ public class agendaForClientResponse {
     String title;
     String detail;
     String full_title;
+    String end_polling;
 
     public String getTitle() {
         return title;
@@ -25,5 +26,9 @@ public class agendaForClientResponse {
 
     public String getFull_title() {
         return full_title;
+    }
+
+    public String getEndPolling(){
+        return end_polling;
     }
 }

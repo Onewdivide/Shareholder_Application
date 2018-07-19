@@ -3,8 +3,11 @@ package com.example.onewdivideslaptop.shareholder_application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -53,6 +56,36 @@ public class MainPage extends AppCompatActivity {
                 AppUtility.mainPage = context;
                 AppUtility.focus(context);
 
+                dialog = new Dialog(context);
+
+                ((Button)findViewById(R.id.logoutButton)).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.setContentView(R.layout.logout_popup);
+                        Button yesBtn = (Button) dialog.findViewById(R.id.yesBtn);
+                        Button noBtn = (Button) dialog.findViewById(R.id.noBtn);
+
+                        yesBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent = new Intent(MainPage.this,LoginPage.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
+                        noBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.show();
+                    }
+                });
+
                 ((Button)findViewById(R.id.refreshButton)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -72,8 +105,6 @@ public class MainPage extends AppCompatActivity {
                         });
                     }
                 });
-
-                dialog = new Dialog(context);
 
                 voteAgreeButton = (Button) findViewById(R.id.vote_agree_button);
                 voteAgreeButton.setOnClickListener(new View.OnClickListener() {

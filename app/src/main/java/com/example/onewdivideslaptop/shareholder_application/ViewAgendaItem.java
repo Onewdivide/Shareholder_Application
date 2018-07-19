@@ -32,38 +32,50 @@ public class ViewAgendaItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        setContentView(R.layout.activity_view_agenda_item);
 
         AppUtility.focus(this);
-
-        Intent intent = getIntent();
-        String title = intent.getStringExtra("title");
-        String description = intent.getStringExtra("description");
-
-        agenda_item_title = (TextView) findViewById(R.id.agenda_item_title);
-        agenda_item_title.setText(title);
-
-        agenda_item_description = (TextView) findViewById(R.id.agenda_item_description);
-        agenda_item_description.setText(description);
-
-        backButton = (ImageButton) findViewById(R.id.back_button);
-        backButton.setOnClickListener(new View.OnClickListener() {
+        Authority.getAuthorities(new Runnable() {
             @Override
-            public void onClick(View view) {
-                finish();
+            public void run() {
+                setContentView(R.layout.activity_view_agenda_item);
+
+                Intent intent = getIntent();
+                String title = intent.getStringExtra("title");
+                String description = intent.getStringExtra("description");
+
+                agenda_item_title = (TextView) findViewById(R.id.agenda_item_title);
+                agenda_item_title.setText(title);
+
+                agenda_item_description = (TextView) findViewById(R.id.agenda_item_description);
+                agenda_item_description.setText(description);
+
+                backButton = (ImageButton) findViewById(R.id.back_button);
+                backButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+
+                vote_dialog = new Dialog(context);
+                auth_dialog = new Dialog(context);
+
+                vote_bottom = (Button) findViewById(R.id.vote_button);
+                vote_bottom.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        vote();
+                    }
+                });
+
+                if(!Authority.anyAuthAvailable()){
+                    vote_bottom.setEnabled(false);
+                    vote_bottom.setTextColor(Color.parseColor("#FFFFFF"));
+                    vote_bottom.setText("ใช้สิทธิ์หมดแล้ว");
+                }
             }
         });
 
-        vote_dialog = new Dialog(this);
-        auth_dialog = new Dialog(this);
-
-        vote_bottom = (Button) findViewById(R.id.vote_button);
-        vote_bottom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                vote();
-            }
-        });
     }
 
     public void vote(){
