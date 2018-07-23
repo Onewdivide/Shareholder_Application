@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+
+import com.example.onewdivideslaptop.shareholder_application.task.UpdateAgendaStatusTask;
 
 public class ViewAll extends AppCompatActivity {
 
@@ -48,11 +51,22 @@ public class ViewAll extends AppCompatActivity {
         refresh_flag = true;
     }
 
-    public void reload(){
+    public void reload(final Runnable callback){
         if(refresh_flag){
-            startActivity(new Intent(AppUtility.mainPage,ViewAll.class));
-            finish();
+            AppUtility.fetchAgenda(new Runnable() {
+                @Override
+                public void run() {
+                    (new UpdateAgendaStatusTask(new Runnable() {
+                        @Override
+                        public void run() {
+                            ViewAll.this.recreate();
+                            callback.run();
+                        }
+                    })).perform();
+                }
+            });
         }
+        callback.run();
     }
 
 }

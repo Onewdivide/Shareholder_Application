@@ -152,12 +152,14 @@ public class AppUtility {
         //============================== VOTE ALL ==============================
         if(active_agenda==AGENDA_ALL){
             final GetRightTask getTask;
+
             Runnable onGetSucces = new Runnable() {
                 @Override
                 public void run() {
                     (new VoteTask(getTeskResult, callback)).perform();
                 }
             };
+
             if(active_auth==AUTH_ALL){
                 getTask = new GetRightTask(new ArrayList<>(Arrays.asList(Authority.authorities_id)),onGetSucces);
             }else{

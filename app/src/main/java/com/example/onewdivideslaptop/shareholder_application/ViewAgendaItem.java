@@ -53,8 +53,12 @@ public class ViewAgendaItem extends AppCompatActivity {
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ViewAll.currentViewAllPage.reload();
-                        finish();
+                        ViewAll.currentViewAllPage.reload(new Runnable() {
+                            @Override
+                            public void run() {
+                                ViewAgendaItem.this.finish();
+                            }
+                        });
                     }
                 });
 
