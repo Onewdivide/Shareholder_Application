@@ -20,7 +20,6 @@ import static com.example.onewdivideslaptop.shareholder_application.AppUtility.V
 import static com.example.onewdivideslaptop.shareholder_application.Authority.selectAuthority;
 
 public class ViewAgendaItem extends AppCompatActivity {
-
     TextView agenda_item_title;
     TextView agenda_item_description;
     ImageButton backButton;
@@ -32,6 +31,7 @@ public class ViewAgendaItem extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+        AppUtility.currentAgengaPage = this;
 
         AppUtility.focus(this);
         Authority.getAuthorities(new Runnable() {
@@ -53,6 +53,7 @@ public class ViewAgendaItem extends AppCompatActivity {
                 backButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        ViewAll.currentViewAllPage.reload();
                         finish();
                     }
                 });
@@ -68,11 +69,7 @@ public class ViewAgendaItem extends AppCompatActivity {
                     }
                 });
 
-                if(!Authority.anyAuthAvailable()){
-                    vote_bottom.setEnabled(false);
-                    vote_bottom.setTextColor(Color.parseColor("#FFFFFF"));
-                    vote_bottom.setText("ใช้สิทธิ์หมดแล้ว");
-                }
+                validateButton();
             }
         });
 
@@ -86,6 +83,7 @@ public class ViewAgendaItem extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AppUtility.active_vote_type = VOTE_AGREE;
+                vote_dialog.dismiss();
                 selectAuthority(auth_dialog);
             }
         });
@@ -95,6 +93,7 @@ public class ViewAgendaItem extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AppUtility.active_vote_type = VOTE_DISAGREE;
+                vote_dialog.dismiss();
                 selectAuthority(auth_dialog);
             }
         });
@@ -104,12 +103,21 @@ public class ViewAgendaItem extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AppUtility.active_vote_type = VOTE_NOCOMMENT;
+                vote_dialog.dismiss();
                 selectAuthority(auth_dialog);
             }
         });
 
         vote_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         vote_dialog.show();
+    }
+
+    public void validateButton(){
+        if(!Authority.anyAuthAvailable()){
+            vote_bottom.setEnabled(false);
+            vote_bottom.setTextColor(Color.parseColor("#FFFFFF"));
+            vote_bottom.setText("ใช้สิทธิ์หมดแล้ว");
+        }
     }
 
 }

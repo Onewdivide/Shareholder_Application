@@ -34,13 +34,13 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
-                                      <entry key="backgroundLayerName" value="img_user_bg" />
-                                      <entry key="foregroundImage" value="C:\Users\USER\Desktop\Shareholder res\user1.png" />
-                                      <entry key="foregroundLayerName" value="img_user_fg" />
+                                      <entry key="backgroundColor" value="d5ffb2" />
+                                      <entry key="backgroundLayerName" value="img_mark_bg" />
+                                      <entry key="foregroundImage" value="C:\Users\USER\Desktop\Shareholder res\check-mark-1292787_960_720.png" />
+                                      <entry key="foregroundLayerName" value="img_mark_fg" />
                                       <entry key="generateRoundIcon" value="false" />
                                       <entry key="generateWebIcon" value="false" />
-                                      <entry key="outputName" value="img_user" />
+                                      <entry key="outputName" value="img_mark" />
                                     </map>
                                   </option>
                                 </PersistentState>

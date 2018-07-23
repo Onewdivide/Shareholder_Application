@@ -1,6 +1,7 @@
 package com.example.onewdivideslaptop.shareholder_application;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
@@ -21,13 +22,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AppUtility {
+    private static final String baseURL = "http://172.20.10.7:8081/"; //ME
     //private static final String baseURL = "http://172.20.10.3:8081/"; //PJ
-    private static final String baseURL = "http://172.20.10.6:8081/"; //PJ
+    //private static final String baseURL = "http://172.20.10.6:8081/"; //PJ
     //private static final String baseURL = "http://192.168.137.1:8081/"; //PM
     public static shareHolderClient client;
 
     private static Context context;
     public static Context mainPage;
+    public static ViewAgendaItem currentAgengaPage;
     private static String delegate_id;
     public static String token;
     private static String th_name, en_name;
@@ -41,7 +44,10 @@ public class AppUtility {
     public static final String VOTE_NOCOMMENT = "nocomment";
     public static String[] agenda_titles, agenda_full_titles, agenda_descriptions;
     public static int[] agenda_ids;
+    public static boolean[] agenda_completed;
     public static ArrayList<Pair<String,ArrayList<voteResponse>>> getTeskResult;
+
+    public static boolean prevent_viewall_flag = false;
 
     static{
         client = (new Retrofit.Builder()).baseUrl(baseURL).addConverterFactory(GsonConverterFactory.create()).build().create(shareHolderClient.class);
@@ -118,6 +124,7 @@ public class AppUtility {
                 agenda_titles = new String[availableAgendaCount];
                 agenda_full_titles = new String[availableAgendaCount];
                 agenda_descriptions = new String[availableAgendaCount];
+                agenda_completed = new boolean[availableAgendaCount];
 
                 for(int k=0;k<availableIndex.size();++k){
                     agendaForClientResponse agenda = response.body().get(availableIndex.get(k));
@@ -125,7 +132,6 @@ public class AppUtility {
                     agenda_titles[k] = agenda.getTitle();
                     agenda_full_titles[k] = agenda.getFull_title();
                     agenda_descriptions[k] = agenda.getDetail();
-                    ++k;
                 }
                 callback.run();
             }
@@ -202,7 +208,15 @@ public class AppUtility {
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    callback.run();
+                    Authority.requireUpdate();
+                    Authority.getAuthorities(new Runnable() {
+                        @Override
+                        public void run() {
+                            AppUtility.currentAgengaPage.validateButton();
+                            ViewAll.requireUpdate();
+                            callback.run();
+                        }
+                    });
                 }
 
                 @Override

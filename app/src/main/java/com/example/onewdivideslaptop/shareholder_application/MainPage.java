@@ -12,6 +12,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.onewdivideslaptop.shareholder_application.task.Task;
+import com.example.onewdivideslaptop.shareholder_application.task.UpdateAgendaStatusTask;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -20,6 +23,7 @@ import static com.example.onewdivideslaptop.shareholder_application.AppUtility.A
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_AGREE;
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_DISAGREE;
 import static com.example.onewdivideslaptop.shareholder_application.AppUtility.VOTE_NOCOMMENT;
+import static com.example.onewdivideslaptop.shareholder_application.AppUtility.prevent_viewall_flag;
 
 public class MainPage extends AppCompatActivity {
 
@@ -97,10 +101,18 @@ public class MainPage extends AppCompatActivity {
                 viewAllBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if(AppUtility.prevent_viewall_flag) return;
+                        AppUtility.prevent_viewall_flag = true;
                         AppUtility.fetchAgenda(new Runnable() {
                             @Override
                             public void run() {
-                                MainPage.this.startActivity(new Intent(MainPage.this,ViewAll.class));
+                                AppUtility.prevent_viewall_flag = false;
+                                (new UpdateAgendaStatusTask(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        MainPage.this.startActivity(new Intent(MainPage.this,ViewAll.class));
+                                    }
+                                })).perform();
                             }
                         });
                     }

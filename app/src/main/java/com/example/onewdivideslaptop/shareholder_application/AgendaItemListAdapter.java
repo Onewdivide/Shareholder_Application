@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,25 +15,31 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
     private String[] mAgendaTitle;
     private String[] mAgendaFullTitle;
     private String[] mAgendaDescription;
+    private boolean[] mAgendaCompleted;
     private int[] mAgendaID;
     private Context context;
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         public View view;
         public TextView title;
+        public LinearLayout layout;
+        public ImageView mark;
         public ViewHolder(View v){
             super(v);
             view = v;
             title = v.findViewById(R.id.title);
+            layout = v.findViewById(R.id.layout);
+            mark = v.findViewById(R.id.mark);
         }
     }
 
-    public AgendaItemListAdapter(int[] ids,String[] titles,String[] full_titles,String[] descriptions){
+    public AgendaItemListAdapter(int[] ids,String[] titles,String[] full_titles,String[] descriptions,boolean[] completed){
         this.context = AppUtility.getCurrentContext();
         this.mAgendaID = ids;
         this.mAgendaTitle = titles;
         this.mAgendaDescription = descriptions;
         this.mAgendaFullTitle = full_titles;
+        this.mAgendaCompleted = completed;
     }
 
     public AgendaItemListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,int viewType){
@@ -43,11 +50,6 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
 
     public void onBindViewHolder(ViewHolder holder, final int position){
         holder.title.setText(mAgendaTitle[position]);
-//        if(position%2==0){
-//            holder.view.setBackgroundColor(Color.parseColor("#80F0D1"));
-//        }else{
-//            holder.view.setBackgroundColor(Color.parseColor("#BAF080"));
-//        }
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +60,10 @@ public class AgendaItemListAdapter extends RecyclerView.Adapter<AgendaItemListAd
                 context.startActivity(intent);
             }
         });
+        if(mAgendaCompleted[position]){
+            holder.layout.setBackgroundResource(R.drawable.agenda_item_frame_completed);
+            holder.mark.setVisibility(View.VISIBLE);
+        }
     }
 
     public int getItemCount(){
